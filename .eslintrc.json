@@ -12,6 +12,9 @@
 			"jsx": true
 		}
 	},
+	"env": {
+		"jest": true
+	},
 	"globals": {
 		"require": false,
 		"head": false,

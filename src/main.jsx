@@ -2,14 +2,12 @@ import React from 'react'
 import {render} from 'react-dom'
 import {Canvas, Slide, NavButton, KeyboardControls} from './canvas'
 import styles from './main.css'
-// <button onClick={this.moveTo.bind(this, -1)}>&laquo;</button>
-// <button onClick={this.moveTo.bind(this, +1)}>&raquo;</button>
 
 const slides = (
 	<Canvas>
 		<div className={styles.nav}>
 			<KeyboardControls />
-			<NavButton action="back">«</NavButton>
+			<NavButton action="backward">«</NavButton>
 			<NavButton action="forward">»</NavButton>
 		</div>
 

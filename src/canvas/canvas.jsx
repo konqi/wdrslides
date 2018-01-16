@@ -10,18 +10,28 @@ class Canvas extends React.Component {
 		super(props)
 		this.state = {position: 0}
 		this.slides = null
-		this.handleNavigation = this.handleNavigation.bind(this)
+		this.handleNavigation = this.handleNavigation
 	}
 
 	getChildContext () {
 		return {
-			handleNavigation: this.handleNavigation,
+			handleNavigation: this.handleNavigation.bind(this),
 			position: this.state.position
 		}
 	}
 
-	handleNavigation (direction: number) {
-		this.setState({position: this.state.position + direction})
+	handleNavigation (action: 'forward' | 'backward' | 'up' | 'down') {
+		// determine where to go
+		switch (action) {
+			case 'forward' || 'down':
+				this.setState({position: this.state.position + 1})
+				break
+			case 'backward' || 'up':
+				this.setState({position: this.state.position - 1})
+				break
+			default:
+				console.error(`Unhandled navigation event ${action}.`)
+		}
 	}
 
 	render () {

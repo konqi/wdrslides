@@ -3,11 +3,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 class KeyboardControls extends React.Component {
-	handleNavigation (action) {
-		console.log(action)
-		this.context.handleNavigation({forward: 1, back: -1}[action])
-	}
-
 	componentDidMount () {
 		document.addEventListener('keydown', this.handleKeyPress.bind(this), false)
 	}
@@ -22,25 +17,27 @@ class KeyboardControls extends React.Component {
 	handleKeyPress (event) {
 		switch (event.code) {
 			case 'ArrowDown': // move one slide down
-				this.handleNavigation('forward')
+				this.context.handleNavigation('forward')
 				break
 			case 'ArrowUp': // move one slide up
-				this.handleNavigation('backward')
+				this.context.handleNavigation('backward')
 				break
 			case 'ArrowLeft': // move to slide to the left
-				this.handleNavigation('back')
+				this.context.handleNavigation('back')
 				break
 			case 'ArrowRight': // move to slide to the right
-				this.handleNavigation('forward')
+				this.context.handleNavigation('forward')
 				break
 			case 'Space': // logically the next slide
-				this.handleNavigation('forward')
+				this.context.handleNavigation('forward')
 				break
 			case 'Backspace':
-				this.handleNavigation('back')
+				this.context.handleNavigation('back')
 				break
 			default:
-				console.log(`event code ${event.code} is not handled at the moment.`)
+				console.log(
+					`Event code >> ${event.code} << is not handled at the moment.`
+				)
 		}
 	}
 

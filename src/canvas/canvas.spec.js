@@ -2,7 +2,6 @@ import React from 'react'
 import Slide from './slide'
 import Canvas from './canvas'
 import {mount} from 'enzyme'
-import {Simulate} from 'react-dom/test-utils'
 
 const markup = (
 	<Canvas>
@@ -38,7 +37,7 @@ describe('Canvas component', () => {
 	})
 
 	it('should show the next slide when the "go forward" button is clicked', () => {
-		component.instance().handleNavigation(1)
+		component.instance().handleNavigation('forward')
 		expect(component.find('Slide').at(0).render()[0].attribs.class).toEqual(
 			expect.stringContaining('past')
 		)
@@ -50,7 +49,7 @@ describe('Canvas component', () => {
 
 	it('should show the previous slide when the "go back" button is clicked', () => {
 		// move forward
-		component.instance().handleNavigation(1)
+		component.instance().handleNavigation('forward')
 		// validate
 		expect(component.find('Slide').at(0).render()[0].attribs.class).toEqual(
 			expect.stringContaining('past')
@@ -59,7 +58,7 @@ describe('Canvas component', () => {
 			expect.stringContaining('current')
 		)
 		// move back
-		component.instance().handleNavigation(-1)
+		component.instance().handleNavigation('backward')
 		// validate
 		expect(component.find('Slide').at(0).render()[0].attribs.class).toEqual(
 			expect.stringContaining('current')
