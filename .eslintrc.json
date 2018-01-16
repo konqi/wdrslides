@@ -1,0 +1,35 @@
+{
+	"parser": "babel-eslint",
+	"extends": [
+		"standard",
+		"plugin:react/recommended",
+		"plugin:flowtype/recommended"
+	],
+	"parserOptions": {
+		"ecmaVersion": 7,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"globals": {
+		"require": false,
+		"head": false,
+		"hljs": false,
+		"Reveal": false,
+		"window": false,
+		"document": false,
+		"console": false
+	},
+	"plugins": ["react", "flowtype"],
+	"rules": {
+		"indent": [
+			"error",
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
+		"no-tabs": 0
+	}
+}
