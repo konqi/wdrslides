@@ -4,14 +4,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './canvas.css'
 import Slide from './slide'
+// import {filter, size, chain} from 'lodash'
 
 class Canvas extends React.Component {
 	constructor (props) {
 		super(props)
 		this.state = {position: 0}
-		this.slides = null
+		this.slides = 0
 		this.handleNavigation = this.handleNavigation
 	}
+
+	// componentDidMount () {
+	// 	this.chain(React.Children.toArray(this.props.children))
+	// 		.filter(child => child.type === Slide)
+	// 		.size()
+	// }
 
 	getChildContext () {
 		return {
@@ -20,14 +27,30 @@ class Canvas extends React.Component {
 		}
 	}
 
+	goForward () {
+		if (this.state.position + 1 < this.slides) {
+			this.setState({position: this.state.position + 1})
+		} else {
+			console.log('no more slides in that direction')
+		}
+	}
+
+	goBackward () {
+		if (this.state.position > 0) {
+			this.setState({position: this.state.position - 1})
+		} else {
+			console.log('no more slides in that direction')
+		}
+	}
+
 	handleNavigation (action: 'forward' | 'backward' | 'up' | 'down') {
 		// determine where to go
 		switch (action) {
 			case 'forward' || 'down':
-				this.setState({position: this.state.position + 1})
+				this.goForward()
 				break
 			case 'backward' || 'up':
-				this.setState({position: this.state.position - 1})
+				this.goBackward()
 				break
 			default:
 				console.error(`Unhandled navigation event ${action}.`)
@@ -35,22 +58,17 @@ class Canvas extends React.Component {
 	}
 
 	render () {
-		this.slides = []
-		let getState = index =>
-			this.state.position > index
+		this.slides = 0
+		let getState = n =>
+			this.state.position > n
 				? 'past'
-				: this.state.position < index ? 'future' : 'current'
-		let addSlide = el => {
-			if (el) this.slides.push(el)
-		}
+				: this.state.position < n ? 'future' : 'current'
 
-		let index = 0
 		let render = React.Children.map(this.props.children, child => {
 			switch (child.type) {
 				case Slide:
 					return React.cloneElement(child, {
-						ref: addSlide,
-						state: getState(index++)
+						state: getState(this.slides++)
 					})
 				default:
 					return child
