@@ -42,7 +42,7 @@ class KeyboardControls extends React.Component {
 	}
 
 	render () {
-		return <div />
+		return null
 	}
 }
 

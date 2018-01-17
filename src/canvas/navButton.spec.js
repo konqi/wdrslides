@@ -36,4 +36,34 @@ describe('NavButton component', () => {
 		component.simulate('click')
 		expect(mockFn).toHaveBeenCalled()
 	})
+
+	it('should add class "first" when the context says that we are on the first slide', () => {
+		const component = shallow(<NavButton />, {
+			context: {isFirst: true, handleNavigation: () => {}}
+		})
+		expect(component.render()[0].attribs.class).toEqual(
+			expect.stringContaining('first')
+		)
+	})
+
+	it('should add class "last" when the context says that we are on the last slide', () => {
+		const component = shallow(<NavButton />, {
+			context: {isLast: true, handleNavigation: () => {}}
+		})
+		expect(component.render()[0].attribs.class).toEqual(
+			expect.stringContaining('last')
+		)
+	})
+
+	it('should add classes "first" and "last" when there is just one slide', () => {
+		const component = shallow(<NavButton />, {
+			context: {isLast: true, isFirst: true, handleNavigation: () => {}}
+		})
+		expect(component.render()[0].attribs.class).toEqual(
+			expect.stringContaining('last')
+		)
+		expect(component.render()[0].attribs.class).toEqual(
+			expect.stringContaining('first')
+		)
+	})
 })

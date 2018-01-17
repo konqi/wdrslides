@@ -23,7 +23,9 @@ class Canvas extends React.Component {
 	getChildContext () {
 		return {
 			handleNavigation: this.handleNavigation.bind(this),
-			position: this.state.position
+			position: this.state.position,
+			isFirst: this.state.position <= 0,
+			isLast: this.state.position + 1 >= this.slides
 		}
 	}
 
@@ -85,7 +87,9 @@ Canvas.propTypes = {
 
 Canvas.childContextTypes = {
 	handleNavigation: PropTypes.func,
-	position: PropTypes.number
+	position: PropTypes.number,
+	isLast: PropTypes.bool,
+	isFirst: PropTypes.bool
 }
 
 export default Canvas
