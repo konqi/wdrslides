@@ -7,9 +7,9 @@ describe('KeyboardControls component', () => {
 		const consoleLog = console.log
 		console.log = jest.fn()
 		const mockFn = jest.fn()
-		let component = shallow(<KeyboardControls />, {
-			context: {handleNavigation: mockFn}
-		})
+		let component = shallow(
+			<KeyboardControls handleNavigationCallback={mockFn} />
+		)
 		component.instance().handleKeyPress({code: 'Hi!'})
 		expect(mockFn).not.toHaveBeenCalled()
 		expect(console.log).toHaveBeenCalled()
@@ -23,9 +23,9 @@ describe('KeyboardControls component', () => {
 			done()
 		})
 		// shallow render component for test
-		let component = shallow(<KeyboardControls />, {
-			context: {handleNavigation: mockFn}
-		})
+		let component = shallow(
+			<KeyboardControls handleNavigationCallback={mockFn} />
+		)
 		// precondition: the mock must not have been called
 		expect(mockFn).not.toHaveBeenCalled()
 		// perform action

@@ -10,10 +10,9 @@ describe('NavButton component', () => {
 		})
 
 		const component = shallow(
-			<NavButton action="forward">Hello World!</NavButton>,
-			{
-				context: {handleNavigation: mockFn}
-			}
+			<NavButton action="forward" handleNavigationCallback={mockFn}>
+        Hello World!
+			</NavButton>
 		)
 		expect(mockFn).not.toHaveBeenCalled()
 		component.simulate('click')
@@ -27,10 +26,9 @@ describe('NavButton component', () => {
 		})
 
 		const component = shallow(
-			<NavButton action="backward">Hello World!</NavButton>,
-			{
-				context: {handleNavigation: mockFn}
-			}
+			<NavButton action="backward" handleNavigationCallback={mockFn}>
+        Hello World!
+			</NavButton>
 		)
 		expect(mockFn).not.toHaveBeenCalled()
 		component.simulate('click')
@@ -38,27 +36,21 @@ describe('NavButton component', () => {
 	})
 
 	it('should add class "first" when the context says that we are on the first slide', () => {
-		const component = shallow(<NavButton />, {
-			context: {isFirst: true, handleNavigation: () => {}}
-		})
+		const component = shallow(<NavButton isFirst={true} />)
 		expect(component.render()[0].attribs.class).toEqual(
 			expect.stringContaining('first')
 		)
 	})
 
 	it('should add class "last" when the context says that we are on the last slide', () => {
-		const component = shallow(<NavButton />, {
-			context: {isLast: true, handleNavigation: () => {}}
-		})
+		const component = shallow(<NavButton isLast={true} />)
 		expect(component.render()[0].attribs.class).toEqual(
 			expect.stringContaining('last')
 		)
 	})
 
 	it('should add classes "first" and "last" when there is just one slide', () => {
-		const component = shallow(<NavButton />, {
-			context: {isLast: true, isFirst: true, handleNavigation: () => {}}
-		})
+		const component = shallow(<NavButton isFirst={true} isLast={true} />)
 		expect(component.render()[0].attribs.class).toEqual(
 			expect.stringContaining('last')
 		)

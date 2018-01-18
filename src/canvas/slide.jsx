@@ -7,7 +7,11 @@ class Slide extends React.Component {
 		return (
 			<div
 				role="Slide"
-				className={styles.slide + ' ' + styles[this.props.state]}
+				className={[
+					this.props.className,
+					styles.slide,
+					styles[this.props.state]
+				].join(' ')}
 			>
 				<div className={styles.body}>{this.props.children}</div>
 			</div>
@@ -19,15 +23,12 @@ class Slide extends React.Component {
 
 Slide.propTypes = {
 	state: PropTypes.oneOf(['past', 'current', 'future']),
-	children: PropTypes.any
-}
-
-Slide.contextTypes = {
-	aspectRatio: PropTypes.number,
-	border: PropTypes.number
+	children: PropTypes.any,
+	className: PropTypes.string
 }
 
 Slide.defaultProps = {
-	state: 'future'
+	state: 'future',
+	className: ''
 }
 export default Slide

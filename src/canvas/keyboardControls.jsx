@@ -17,22 +17,22 @@ class KeyboardControls extends React.Component {
 	handleKeyPress (event) {
 		switch (event.code) {
 			case 'ArrowDown': // move one slide down
-				this.context.handleNavigation('forward')
+				this.props.handleNavigationCallback('forward')
 				break
 			case 'ArrowUp': // move one slide up
-				this.context.handleNavigation('backward')
+				this.props.handleNavigationCallback('backward')
 				break
 			case 'ArrowLeft': // move to slide to the left
-				this.context.handleNavigation('backward')
+				this.props.handleNavigationCallback('backward')
 				break
 			case 'ArrowRight': // move to slide to the right
-				this.context.handleNavigation('forward')
+				this.props.handleNavigationCallback('forward')
 				break
 			case 'Space': // logically the next slide
-				this.context.handleNavigation('forward')
+				this.props.handleNavigationCallback('forward')
 				break
 			case 'Backspace':
-				this.context.handleNavigation('backward')
+				this.props.handleNavigationCallback('backward')
 				break
 			default:
 				console.log(
@@ -46,8 +46,16 @@ class KeyboardControls extends React.Component {
 	}
 }
 
-KeyboardControls.contextTypes = {
-	handleNavigation: PropTypes.func
+KeyboardControls.propTypes = {
+	handleNavigationCallback: PropTypes.func
+}
+
+KeyboardControls.defaultProps = {
+	handleNavigationCallback: () => {
+		console.log(
+			'It appears you are using KeyboardControls outside a Presentation context. Please only use KeyboardControls inside <Presentation></Presentation>.'
+		)
+	}
 }
 
 export default KeyboardControls

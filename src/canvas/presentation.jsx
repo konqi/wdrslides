@@ -1,28 +1,16 @@
 // @flow
 import React from 'react'
 import PropTypes from 'prop-types'
-import Canvas from './canvas'
 
 class Presentation extends React.Component {
 	constructor (props) {
 		super(props)
-		this.state = {position: 0}
-		this.numberOfSlides = 0
+		this.state = {position: 0, total: 0}
 		this.handleNavigation = this.handleNavigation
 	}
 
-	getChildContext () {
-		return {
-			handleNavigation: this.handleNavigation.bind(this),
-			position: this.state.position,
-			total: this.slides,
-			isFirst: this.state.position <= 0,
-			isLast: this.state.position + 1 >= this.slides
-		}
-	}
-
 	goForward () {
-		if (this.state.position + 1 < this.numberOfSlides) {
+		if (this.state.position + 1 < this.state.total) {
 			this.setState({position: this.state.position + 1})
 		} else {
 			console.log('no more slides in that direction')
@@ -52,32 +40,25 @@ class Presentation extends React.Component {
 	}
 
 	slidesLoadedCallback (numberOfSlides) {
-		this.numberOfSlides = numberOfSlides
+		this.setState({total: numberOfSlides})
 	}
 
 	render () {
 		return React.Children.map(this.props.children, child => {
-			if (child.type === Canvas) {
-				return React.cloneElement(child, {
-					slidesLoadedCallback: this.slidesLoadedCallback.bind(this),
-					currentSlide: this.state.position
-				})
-			}
-			return child
+			return React.cloneElement(child, {
+				slidesLoadedCallback: this.slidesLoadedCallback.bind(this),
+				handleNavigationCallback: this.handleNavigation.bind(this),
+				isFirst: this.state.position <= 0,
+				isLast: this.state.position + 1 >= this.slides,
+				currentSlide: this.state.position,
+				numberOfSlides: this.state.total
+			})
 		})
 	}
 }
 
 Presentation.propTypes = {
 	children: PropTypes.arrayOf(PropTypes.element)
-}
-
-Presentation.childContextTypes = {
-	handleNavigation: PropTypes.func,
-	position: PropTypes.number,
-	total: PropTypes.number,
-	isLast: PropTypes.bool,
-	isFirst: PropTypes.bool
 }
 
 export default Presentation

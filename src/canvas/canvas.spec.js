@@ -4,7 +4,7 @@ import Canvas from './canvas'
 import {mount} from 'enzyme'
 
 const markup = (
-	<Canvas>
+	<Canvas slidesLoadedCallback={() => {}}>
 		<Slide>
 			<div>
 				<h1>Hello World!</h1>

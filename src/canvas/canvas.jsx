@@ -14,6 +14,7 @@ class Canvas extends React.Component {
 			height: Math.floor(960 / props.aspectRatio)
 		}
 		this.updateDimensions = throttle(this.updateDimensions.bind(this), 100)
+		this.numberOfSlides = 0
 	}
 
 	componentWillMount () {
@@ -22,6 +23,7 @@ class Canvas extends React.Component {
 
 	componentDidMount () {
 		window.addEventListener('resize', this.updateDimensions)
+		this.props.slidesLoadedCallback(this.numberOfSlides)
 	}
 
 	componentWillUnmount () {
@@ -49,20 +51,18 @@ class Canvas extends React.Component {
 	}
 
 	render () {
-		let slides = 0
+		this.numberOfSlides = 0
 
 		let render = React.Children.map(this.props.children, child => {
 			switch (child.type) {
 				case Slide:
 					return React.cloneElement(child, {
-						state: this.getSlideState(slides++)
+						state: this.getSlideState(this.numberOfSlides++)
 					})
 				default:
 					return child
 			}
 		})
-
-		this.props.slidesLoadedCallback(slides)
 
 		return (
 			<div
@@ -92,7 +92,11 @@ Canvas.propTypes = {
 Canvas.defaultProps = {
 	border: 50,
 	aspectRatio: 4 / 3,
-	slidesLoadedCallback: () => {},
+	slidesLoadedCallback: () => {
+		console.log(
+			'It appears you are using Canvas outside a Presentation context. Please only use Canvas inside <Presentation></Presentation>.'
+		)
+	},
 	currentSlide: 0
 }
 

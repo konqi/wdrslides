@@ -5,25 +5,32 @@ import {
 	Canvas,
 	Slide,
 	NavButton,
-	KeyboardControls
+	KeyboardControls,
+	Progress
 } from './canvas'
 import styles from './main.css'
 
 const slides = (
 	<Presentation>
-		<div className={styles.nav}>
-			<KeyboardControls />
-			<NavButton action="backward">«</NavButton>
-			<NavButton action="forward">»</NavButton>
-		</div>
+		<KeyboardControls />
+		<NavButton action="backward">«</NavButton>
+		<Progress />
+		<NavButton action="forward">»</NavButton>
 
 		<Canvas aspectRatio={4 / 3}>
-			<Slide>
-				<h1>Hello World!</h1>
+			<Slide className={styles.centered}>
+				<span style={{textAlign: 'center'}}>
+					<h1>Hello World!</h1>
+					<p>Lets just add</p>
+					<p>a little more text</p>
+					<p>to see how the positioning behaves.</p>
+				</span>
 			</Slide>
 			<Slide>
-				<h2>Ok, Computer.</h2>
-				<p>by Radiohead</p>
+				<div style={{margin: '20px'}}>
+					<h2>Ok, Computer.</h2>
+					<p>by Radiohead</p>
+				</div>
 			</Slide>
 			<Slide>
 				<h3>i forgot</h3>
