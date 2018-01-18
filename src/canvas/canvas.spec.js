@@ -37,7 +37,15 @@ describe('Canvas component', () => {
 	})
 
 	it('should show the next slide when the "go forward" button is clicked', () => {
-		component.instance().handleNavigation('forward')
+		expect(component.find('Slide').at(0).render()[0].attribs.class).toEqual(
+			expect.stringContaining('current')
+		)
+
+		expect(component.find('Slide').at(1).render()[0].attribs.class).toEqual(
+			expect.stringContaining('future')
+		)
+
+		component.setProps({currentSlide: 1})
 		expect(component.find('Slide').at(0).render()[0].attribs.class).toEqual(
 			expect.stringContaining('past')
 		)
@@ -49,7 +57,7 @@ describe('Canvas component', () => {
 
 	it('should show the previous slide when the "go back" button is clicked', () => {
 		// move forward
-		component.instance().handleNavigation('forward')
+		component.setProps({currentSlide: 1})
 		// validate
 		expect(component.find('Slide').at(0).render()[0].attribs.class).toEqual(
 			expect.stringContaining('past')
@@ -58,7 +66,7 @@ describe('Canvas component', () => {
 			expect.stringContaining('current')
 		)
 		// move back
-		component.instance().handleNavigation('backward')
+		component.setProps({currentSlide: 0})
 		// validate
 		expect(component.find('Slide').at(0).render()[0].attribs.class).toEqual(
 			expect.stringContaining('current')
@@ -66,32 +74,5 @@ describe('Canvas component', () => {
 		expect(component.find('Slide').at(1).render()[0].attribs.class).toEqual(
 			expect.stringContaining('future')
 		)
-	})
-
-	it('should not allow going backward when on the first slide', done => {
-		const consoleLog = console.log
-		console.log = jest.fn(() => {
-			done()
-		})
-		// precondition: nothing should've been logged thus far
-		expect(console.log).not.toHaveBeenCalled()
-		component.instance().handleNavigation('backward')
-		expect(console.log).toHaveBeenCalled()
-		console.log = consoleLog
-	})
-
-	it('should not allow going forward when on the last slide', done => {
-		const consoleLog = console.log
-		console.log = jest.fn(() => {
-			done()
-		})
-		// precondition: nothing should've been logged thus far
-		expect(console.log).not.toHaveBeenCalled()
-
-		component.instance().handleNavigation('forward')
-		component.instance().handleNavigation('forward')
-
-		expect(console.log).toHaveBeenCalled()
-		console.log = consoleLog
 	})
 })

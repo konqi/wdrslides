@@ -4,92 +4,96 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './canvas.css'
 import Slide from './slide'
-// import {filter, size, chain} from 'lodash'
+import {throttle} from 'lodash'
 
 class Canvas extends React.Component {
 	constructor (props) {
 		super(props)
-		this.state = {position: 0}
-		this.slides = 0
-		this.handleNavigation = this.handleNavigation
+		this.size = {
+			width: 960,
+			height: Math.floor(960 / props.aspectRatio)
+		}
+		this.updateDimensions = throttle(this.updateDimensions.bind(this), 100)
 	}
 
-	// componentDidMount () {
-	// 	this.chain(React.Children.toArray(this.props.children))
-	// 		.filter(child => child.type === Slide)
-	// 		.size()
-	// }
-
-	getChildContext () {
-		return {
-			handleNavigation: this.handleNavigation.bind(this),
-			position: this.state.position,
-			isFirst: this.state.position <= 0,
-			isLast: this.state.position + 1 >= this.slides
-		}
+	componentWillMount () {
+		this.updateDimensions()
 	}
 
-	goForward () {
-		if (this.state.position + 1 < this.slides) {
-			this.setState({position: this.state.position + 1})
-		} else {
-			console.log('no more slides in that direction')
-		}
+	componentDidMount () {
+		window.addEventListener('resize', this.updateDimensions)
 	}
 
-	goBackward () {
-		if (this.state.position > 0) {
-			this.setState({position: this.state.position - 1})
-		} else {
-			console.log('no more slides in that direction')
-		}
+	componentWillUnmount () {
+		window.removeEventListener('resize', this.updateDimensions)
 	}
 
-	handleNavigation (action: 'forward' | 'backward' | 'up' | 'down') {
-		// determine where to go
-		switch (action) {
-			case 'forward' || 'down':
-				this.goForward()
-				break
-			case 'backward' || 'up':
-				this.goBackward()
-				break
-			default:
-				console.error(`Unhandled navigation event ${action}.`)
-		}
+	updateDimensions () {
+		this.setState({scale: this.calcScale()})
+	}
+
+	calcScale () {
+		let xMax = window.innerWidth - this.props.border * 2
+		let yMax = window.innerHeight - this.props.border * 2
+
+		let scaleX = xMax / this.size.width
+		let scaleY = yMax / this.size.height
+
+		return Math.min(scaleX, scaleY)
+	}
+
+	getSlideState (n) {
+		return this.props.currentSlide > n
+			? 'past'
+			: this.props.currentSlide < n ? 'future' : 'current'
 	}
 
 	render () {
-		this.slides = 0
-		let getState = n =>
-			this.state.position > n
-				? 'past'
-				: this.state.position < n ? 'future' : 'current'
+		let slides = 0
 
 		let render = React.Children.map(this.props.children, child => {
 			switch (child.type) {
 				case Slide:
 					return React.cloneElement(child, {
-						state: getState(this.slides++)
+						state: this.getSlideState(slides++)
 					})
 				default:
 					return child
 			}
 		})
 
-		return <div className={styles.stage}>{render}</div>
+		this.props.slidesLoadedCallback(slides)
+
+		return (
+			<div
+				className={styles.stage}
+				style={{
+					top: '50%',
+					left: '50%',
+					width: `${this.size.width}px`,
+					height: `${this.size.height}px`,
+					transform: `scale3d(${this.state.scale}, ${this.state.scale}, 1) translate3d(-50%,-50%, 0)`
+				}}
+			>
+				{render}
+			</div>
+		)
 	}
 }
 
 Canvas.propTypes = {
-	children: PropTypes.arrayOf(PropTypes.element)
+	children: PropTypes.arrayOf(PropTypes.element),
+	slidesLoadedCallback: PropTypes.func,
+	currentSlide: PropTypes.number,
+	aspectRatio: PropTypes.number,
+	border: PropTypes.number
 }
 
-Canvas.childContextTypes = {
-	handleNavigation: PropTypes.func,
-	position: PropTypes.number,
-	isLast: PropTypes.bool,
-	isFirst: PropTypes.bool
+Canvas.defaultProps = {
+	border: 50,
+	aspectRatio: 4 / 3,
+	slidesLoadedCallback: () => {},
+	currentSlide: 0
 }
 
 export default Canvas

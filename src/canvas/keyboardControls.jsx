@@ -23,7 +23,7 @@ class KeyboardControls extends React.Component {
 				this.context.handleNavigation('backward')
 				break
 			case 'ArrowLeft': // move to slide to the left
-				this.context.handleNavigation('back')
+				this.context.handleNavigation('backward')
 				break
 			case 'ArrowRight': // move to slide to the right
 				this.context.handleNavigation('forward')
@@ -32,7 +32,7 @@ class KeyboardControls extends React.Component {
 				this.context.handleNavigation('forward')
 				break
 			case 'Backspace':
-				this.context.handleNavigation('back')
+				this.context.handleNavigation('backward')
 				break
 			default:
 				console.log(
