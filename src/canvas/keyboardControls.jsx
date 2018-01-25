@@ -1,8 +1,14 @@
-// @flow
-import React from 'react'
-import PropTypes from 'prop-types'
+/**
+ * @flow
+ */
+import * as React from 'react'
+// import PropTypes from 'prop-types'
 
-class KeyboardControls extends React.Component {
+type Props = {
+  handleNavigationCallback: (direction: string) => void
+};
+
+class KeyboardControls extends React.Component<Props> {
 	componentDidMount () {
 		document.addEventListener('keydown', this.handleKeyPress.bind(this), false)
 	}
@@ -14,7 +20,7 @@ class KeyboardControls extends React.Component {
 		)
 	}
 
-	handleKeyPress (event) {
+	handleKeyPress (event: KeyboardEvent) {
 		switch (event.code) {
 			case 'ArrowDown': // move one slide down
 				this.props.handleNavigationCallback('forward')
@@ -44,11 +50,13 @@ class KeyboardControls extends React.Component {
 	render () {
 		return null
 	}
+
+  static defaultProps = {};
 }
 
-KeyboardControls.propTypes = {
-	handleNavigationCallback: PropTypes.func
-}
+// KeyboardControls.propTypes = {
+// 	handleNavigationCallback: PropTypes.func
+// }
 
 KeyboardControls.defaultProps = {
 	handleNavigationCallback: () => {

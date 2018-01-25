@@ -1,9 +1,7 @@
-// @flow
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './canvas.css'
-import Slide from './slide'
+import {Slide} from './slide'
 import {throttle} from 'lodash'
 
 class Canvas extends React.Component {

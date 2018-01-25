@@ -2,7 +2,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const CleanWebpackPlugin = require('clean-webpack-plugin')
-const { optimize, SourceMapDevToolPlugin } = require('webpack')
+const {optimize, SourceMapDevToolPlugin} = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -44,6 +44,11 @@ const plugins = (() => {
 function getLoaders () {
 	return [
 		{
+			test: /\.(ts|tsx)$/,
+			exclude: /node_modules/,
+			loaders: ['babel-loader', 'ts-loader']
+		},
+		{
 			test: /\.(js|jsx)$/,
 			exclude: /node_modules/,
 			loaders: ['babel-loader', 'eslint-loader']
@@ -51,12 +56,12 @@ function getLoaders () {
 		{
 			test: /\.(woff|woff2|eot|ttf|otf)$/,
 			loader: 'file-loader',
-			options: { outputPath: 'fonts/' }
+			options: {outputPath: 'fonts/'}
 		},
 		{
 			test: /\.(png|jpg|svg)$/,
 			loader: 'file-loader',
-			options: { outputPath: 'images/' }
+			options: {outputPath: 'images/'}
 		}
 	]
 }
@@ -81,7 +86,7 @@ function getRules () {
 						localIdentName: '[path]___[name]__[local]___[hash:base64:5]'
 					}
 				},
-				{ loader: 'postcss-loader' }
+				{loader: 'postcss-loader'}
 			]
 		},
 		...getLoaders()
@@ -102,7 +107,7 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist')
 	},
 	resolve: {
-		extensions: ['.json', '.js', '.jsx']
+		extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
 	},
 	module: {
 		rules: getRules()

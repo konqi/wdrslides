@@ -1,12 +1,14 @@
-// @flow
 import React from 'react'
 import PropTypes from 'prop-types'
+// import {Provider} from 'react-redux'
+// import {createStore} from 'redux'
 
 class Presentation extends React.Component {
 	constructor (props) {
 		super(props)
 		this.state = {position: 0, total: 0}
 		this.handleNavigation = this.handleNavigation
+		// this.store = createStore()
 	}
 
 	goForward () {
@@ -25,7 +27,8 @@ class Presentation extends React.Component {
 		}
 	}
 
-	handleNavigation (action: 'forward' | 'backward' | 'up' | 'down') {
+	handleNavigation (action) {
+		// action: 'forward' | 'backward' | 'up' | 'down'
 		// determine where to go
 		switch (action) {
 			case 'forward' || 'down':
@@ -40,20 +43,20 @@ class Presentation extends React.Component {
 	}
 
 	slidesLoadedCallback (numberOfSlides) {
+		// numberOfSlides: number
 		this.setState({total: numberOfSlides})
 	}
 
 	render () {
-		return React.Children.map(this.props.children, child => {
-			return React.cloneElement(child, {
+		return React.Children.map(this.props.children, child =>
+			React.cloneElement(child, {
 				slidesLoadedCallback: this.slidesLoadedCallback.bind(this),
 				handleNavigationCallback: this.handleNavigation.bind(this),
 				isFirst: this.state.position <= 0,
 				isLast: this.state.position + 1 >= this.slides,
 				currentSlide: this.state.position,
 				numberOfSlides: this.state.total
-			})
-		})
+			}))
 	}
 }
 
