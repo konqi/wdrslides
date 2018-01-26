@@ -1,10 +1,6 @@
 {
 	"parser": "babel-eslint",
-	"extends": [
-		"standard",
-		"plugin:react/recommended",
-		"plugin:flowtype/recommended"
-	],
+	"extends": ["standard", "plugin:react/recommended"],
 	"parserOptions": {
 		"ecmaVersion": 7,
 		"sourceType": "module",
@@ -24,7 +20,7 @@
 		"document": false,
 		"console": false
 	},
-	"plugins": ["react", "flowtype"],
+	"plugins": ["react"],
 	"rules": {
 		"indent": [
 			"error",

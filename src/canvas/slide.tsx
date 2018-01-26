@@ -28,3 +28,5 @@ export class Slide extends React.Component<Props, {}> {
 		className: ''
 	}
 }
+
+export default Slide

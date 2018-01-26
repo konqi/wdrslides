@@ -1,17 +1,22 @@
-/**
- * @flow
- */
 import * as React from 'react'
-// import PropTypes from 'prop-types'
 
-type Props = {
+export interface Props {
   handleNavigationCallback: (direction: string) => void
-};
+}
 
-class KeyboardControls extends React.Component<Props> {
+export class KeyboardControls extends React.Component<Props> {
+  static defaultProps = {
+    handleNavigationCallback: () => {
+      console.log(
+        'It appears you are using KeyboardControls outside a Presentation context. Please only use KeyboardControls inside <Presentation></Presentation>.'
+      )
+    }
+  }
+
 	componentDidMount () {
 		document.addEventListener('keydown', this.handleKeyPress.bind(this), false)
 	}
+
 	componentWillUnmount () {
 		document.removeEventListener(
 			'keydown',
@@ -47,22 +52,8 @@ class KeyboardControls extends React.Component<Props> {
 		}
 	}
 
-	render () {
+	render () : React.ReactNode {
 		return null
-	}
-
-  static defaultProps = {};
-}
-
-// KeyboardControls.propTypes = {
-// 	handleNavigationCallback: PropTypes.func
-// }
-
-KeyboardControls.defaultProps = {
-	handleNavigationCallback: () => {
-		console.log(
-			'It appears you are using KeyboardControls outside a Presentation context. Please only use KeyboardControls inside <Presentation></Presentation>.'
-		)
 	}
 }
 

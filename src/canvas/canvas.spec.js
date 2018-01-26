@@ -1,5 +1,5 @@
 import React from 'react'
-import Slide from './slide'
+import {Slide} from './slide'
 import Canvas from './canvas'
 import {mount} from 'enzyme'
 

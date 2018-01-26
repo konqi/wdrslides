@@ -1,10 +1,10 @@
-import React from 'react'
+import * as React from 'react'
 import Slide from './slide'
-import { shallow } from 'enzyme'
+import * as Enzyme from 'enzyme'
 
 describe('Slide component', () => {
 	it('should show the child components', () => {
-		const component = shallow(
+		const component = Enzyme.shallow(
 			<Slide>
 				<h1>Hello World!</h1>
 			</Slide>
@@ -15,7 +15,7 @@ describe('Slide component', () => {
 
 	describe('component must follow state prop', () => {
 		it('default state is "future"', () => {
-			const component = shallow(<Slide />)
+			const component = Enzyme.shallow(<Slide />)
 			expect(component.render()[0].attribs.class).toEqual(
 				expect.stringContaining('future')
 			)
@@ -24,9 +24,9 @@ describe('Slide component', () => {
 		it('other states', () => {
 			let props = {}
 
-			const component = shallow(<Slide {...props} />)
-			;['current', 'past', 'future'].forEach(state => {
-				component.setProps({ state })
+			const component = Enzyme.shallow(<Slide {...props} />);
+			['current', 'past', 'future'].forEach(state => {
+				component.setProps({state})
 				expect(component.render()[0].attribs.class).toEqual(
 					expect.stringContaining(state)
 				)

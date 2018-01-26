@@ -1,18 +1,44 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styles from './canvas.css'
+import * as React from 'react'
 import {Slide} from './slide'
 import {throttle} from 'lodash'
+const styles = require('./canvas.css')
 
-class Canvas extends React.Component {
-	constructor (props) {
+export interface Props extends React.Props<Canvas> {
+	slidesLoadedCallback: any
+	currentSlide: number
+	aspectRatio: number
+	border: number
+}
+
+export interface State {
+	scale: number
+}
+
+export class Canvas extends React.Component<Props, State> {
+	size: {
+		width:number
+		height: number
+	}
+	numberOfSlides: number = 0
+
+	constructor (props: Props) {
 		super(props)
+		this.updateDimensions = throttle(this.updateDimensions.bind(this), 100)
 		this.size = {
 			width: 960,
 			height: Math.floor(960 / props.aspectRatio)
 		}
-		this.updateDimensions = throttle(this.updateDimensions.bind(this), 100)
-		this.numberOfSlides = 0
+	}
+
+	static defaultProps = {
+		border: 50,
+		aspectRatio: 4 / 3,
+		slidesLoadedCallback: () => {
+			console.log(
+				'It appears you are using Canvas outside a Presentation context. Please only use Canvas inside <Presentation></Presentation>.'
+			)
+		},
+		currentSlide: 0
 	}
 
 	componentWillMount () {
@@ -42,7 +68,7 @@ class Canvas extends React.Component {
 		return Math.min(scaleX, scaleY)
 	}
 
-	getSlideState (n) {
+	getSlideState (n: number) : 'past' | 'future' | 'current' {
 		return this.props.currentSlide > n
 			? 'past'
 			: this.props.currentSlide < n ? 'future' : 'current'
@@ -51,7 +77,7 @@ class Canvas extends React.Component {
 	render () {
 		this.numberOfSlides = 0
 
-		let render = React.Children.map(this.props.children, child => {
+		let render = React.Children.map(this.props.children, (child: React.ReactElement<any>) => {
 			switch (child.type) {
 				case Slide:
 					return React.cloneElement(child, {
@@ -77,25 +103,6 @@ class Canvas extends React.Component {
 			</div>
 		)
 	}
-}
-
-Canvas.propTypes = {
-	children: PropTypes.arrayOf(PropTypes.element),
-	slidesLoadedCallback: PropTypes.func,
-	currentSlide: PropTypes.number,
-	aspectRatio: PropTypes.number,
-	border: PropTypes.number
-}
-
-Canvas.defaultProps = {
-	border: 50,
-	aspectRatio: 4 / 3,
-	slidesLoadedCallback: () => {
-		console.log(
-			'It appears you are using Canvas outside a Presentation context. Please only use Canvas inside <Presentation></Presentation>.'
-		)
-	},
-	currentSlide: 0
 }
 
 export default Canvas

@@ -1,10 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-// import {Provider} from 'react-redux'
-// import {createStore} from 'redux'
+import * as React from 'react'
 
-class Presentation extends React.Component {
-	constructor (props) {
+export interface Props extends React.Props<Presentation> {
+}
+
+export interface State {
+	position: number
+	total: number
+}
+
+class Presentation extends React.Component<Props, State> {
+	constructor (props: Props) {
 		super(props)
 		this.state = {position: 0, total: 0}
 		this.handleNavigation = this.handleNavigation
@@ -27,8 +32,7 @@ class Presentation extends React.Component {
 		}
 	}
 
-	handleNavigation (action) {
-		// action: 'forward' | 'backward' | 'up' | 'down'
+	handleNavigation (action: 'forward' | 'backward' | 'up' | 'down') {
 		// determine where to go
 		switch (action) {
 			case 'forward' || 'down':
@@ -42,26 +46,21 @@ class Presentation extends React.Component {
 		}
 	}
 
-	slidesLoadedCallback (numberOfSlides) {
-		// numberOfSlides: number
+	slidesLoadedCallback (numberOfSlides: number) {
 		this.setState({total: numberOfSlides})
 	}
 
 	render () {
-		return React.Children.map(this.props.children, child =>
+		return React.Children.map(this.props.children, (child: React.ReactElement<any>) =>
 			React.cloneElement(child, {
 				slidesLoadedCallback: this.slidesLoadedCallback.bind(this),
 				handleNavigationCallback: this.handleNavigation.bind(this),
 				isFirst: this.state.position <= 0,
-				isLast: this.state.position + 1 >= this.slides,
+				isLast: this.state.position + 1 >= this.state.total,
 				currentSlide: this.state.position,
 				numberOfSlides: this.state.total
 			}))
 	}
-}
-
-Presentation.propTypes = {
-	children: PropTypes.arrayOf(PropTypes.element)
 }
 
 export default Presentation

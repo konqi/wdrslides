@@ -37,3 +37,5 @@ export class NavButton extends React.Component<Props, {}> {
 		)
 	}
 }
+
+export default NavButton

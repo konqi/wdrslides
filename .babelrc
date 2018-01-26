@@ -1,4 +1,4 @@
 {
 	"presets": ["env", "react"],
-	"plugins": ["react-css-modules", "transform-flow-comments"]
+	"plugins": ["react-css-modules", "transform-class-properties"]
 }
