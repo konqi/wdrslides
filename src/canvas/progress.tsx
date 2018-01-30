@@ -1,21 +1,28 @@
-/**
- * @flow
- */
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import {pick} from 'lodash'
 
-export interface Props {
-	currentSlide: number;
-	numberOfSlides: number;
+export interface Context {
+	currentSlide: number
+	totalNumberOfSlides: number
 }
 
-export class Progress extends React.Component<Props, {}> {
+export class Progress extends React.Component<{}, {}> {
+	context: Context
+
+	static contextTypes = {
+		currentSlide: PropTypes.number,
+		totalNumberOfSlides: PropTypes.number
+	}
+
 	render() {
+		const context = pick(this.context, ['currentSlide', 'totalNumberOfSlides'])
 		return (
 			<span>
-				{this.props.currentSlide + 1}/{this.props.numberOfSlides}
+				{1 + context.currentSlide}/{context.totalNumberOfSlides}
 			</span>
 		)
 	}
 }
 
-// export default Progress
+export default Progress

@@ -10,12 +10,10 @@ import {
 } from './canvas'
 import styles from './main.css'
 
+// <Provider store={this.store}>
 const slides = (
 	<Presentation>
 		<KeyboardControls />
-		<NavButton action="backward">«</NavButton>
-		<Progress />
-		<NavButton action="forward">»</NavButton>
 
 		<Canvas aspectRatio={4 / 3}>
 			<Slide className={styles.centered}>
@@ -36,6 +34,12 @@ const slides = (
 				<h3>i forgot</h3>
 			</Slide>
 		</Canvas>
+
+		<div className="navigation">
+			<NavButton action="backward">«</NavButton>
+			<Progress />
+			<NavButton action="forward">»</NavButton>
+		</div>
 	</Presentation>
 )
 

@@ -1,32 +1,51 @@
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import {pick, defaults} from 'lodash'
+
+export interface Context {
+	isFirst: boolean
+	isLast: boolean
+	handleNavigationCallback: (action: 'forward' | 'backward' | 'up' | 'down') => void
+}
 
 export interface Props {
 	className: string
-	isFirst: boolean
-	isLast: boolean
 	children: any
-	handleNavigationCallback: (action: 'forward' | 'backward' | 'up' | 'down') => void
 	action: 'forward' | 'backward' | 'up' | 'down'
 }
 
 export class NavButton extends React.Component<Props, {}> {
 	static defaultProps = {
-		className: '',
-		handleNavigationCallback: () => {
-			console.log(
-				'It appears you are using NavButton outside a Presentation context. Please only use NavButton inside <Presentation></Presentation>.'
-			)
-		}
+		className: ''
 	}
 
+	fallbackFunctionForCallback() {
+		console.log(
+			'It appears you are using NavButton outside a Presentation context. Please only use NavButton inside <Presentation></Presentation>.'
+		)
+	}
+
+	context: Context
+
+	static contextTypes = {
+        isFirst: PropTypes.bool,
+				isLast: PropTypes.bool,
+				handleNavigationCallback: PropTypes.func
+    }
+
 	render () {
+		const context = {
+			isFirst: this.context.isFirst,
+			isLast: this.context.isLast,
+			handleNavigationCallback: this.context.handleNavigationCallback || this.fallbackFunctionForCallback
+		}
 		let addonClasses = [this.props.className]
-		if (this.props.isFirst) addonClasses.push('first')
-		if (this.props.isLast) addonClasses.push('last')
+		if (context.isFirst) addonClasses.push('first')
+		if (context.isLast) addonClasses.push('last')
 
 		return (
 			<button
-				onClick={this.props.handleNavigationCallback.bind(
+				onClick={context.handleNavigationCallback.bind(
 					this,
 					this.props.action
 				)}

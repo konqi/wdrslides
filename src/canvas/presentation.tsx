@@ -1,4 +1,11 @@
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
+// import {Provider} from 'react-redux'
+
+// import {createStore} from 'redux'
+// import PresentationStore from './store'
+// store: any
+// this.store = createStore(PresentationStore)
 
 export interface Props extends React.Props<Presentation> {
 }
@@ -8,12 +15,29 @@ export interface State {
 	total: number
 }
 
+export interface PresentationContext {
+	currentSlide: number
+	totalNumberOfSlides: number
+	handleNavigationCallback: (action: 'forward' | 'backward' | 'up' | 'down') => void
+	isFirst: boolean
+	isLast: boolean
+}
+
 class Presentation extends React.Component<Props, State> {
 	constructor (props: Props) {
 		super(props)
 		this.state = {position: 0, total: 0}
 		this.handleNavigation = this.handleNavigation
-		// this.store = createStore()
+	}
+
+	getChildContext() : PresentationContext {
+		return {
+			currentSlide: this.state.position,
+			totalNumberOfSlides: this.state.total,
+			handleNavigationCallback: this.handleNavigation.bind(this),
+			isFirst: this.state.position <= 0,
+			isLast: this.state.position + 1 >= this.state.total
+		}
 	}
 
 	goForward () {
@@ -51,15 +75,24 @@ class Presentation extends React.Component<Props, State> {
 	}
 
 	render () {
-		return React.Children.map(this.props.children, (child: React.ReactElement<any>) =>
-			React.cloneElement(child, {
+		return React.Children.map(this.props.children, (child: React.ReactElement<any>) => {
+			if(typeof child.type === 'string'){
+				return child
+			} else {
+			return React.cloneElement(child, {
 				slidesLoadedCallback: this.slidesLoadedCallback.bind(this),
-				handleNavigationCallback: this.handleNavigation.bind(this),
-				isFirst: this.state.position <= 0,
-				isLast: this.state.position + 1 >= this.state.total,
-				currentSlide: this.state.position,
-				numberOfSlides: this.state.total
-			}))
+				currentSlide: this.state.position
+			})
+			}
+		})
+	}
+
+	static childContextTypes = {
+		currentSlide: PropTypes.number,
+		totalNumberOfSlides: PropTypes.number,
+		handleNavigationCallback: PropTypes.func,
+		isFirst: PropTypes.bool,
+		isLast: PropTypes.bool
 	}
 }
 
