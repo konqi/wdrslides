@@ -62,6 +62,15 @@ function getLoaders () {
 			test: /\.(png|jpg|svg)$/,
 			loader: 'file-loader',
 			options: {outputPath: 'images/'}
+		},
+		{
+			test: /\.(html)$/,
+			use: {
+				loader: 'html-loader',
+				options: {
+					attrs: [':data-src']
+				}
+			}
 		}
 	]
 }

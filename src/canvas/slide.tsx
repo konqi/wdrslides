@@ -4,7 +4,8 @@ const styles = require('./slide.css')
 export interface Props {
 	state: 'past' | 'current' | 'future'
 	children: any
-	className: string
+	className: string,
+	style: object
 }
 
 export class Slide extends React.Component<Props, {}> {
@@ -18,7 +19,7 @@ export class Slide extends React.Component<Props, {}> {
 					styles[this.props.state]
 				].join(' ')}
 			>
-				<div className={styles.body}>{this.props.children}</div>
+				<div className={`${styles.body} ${this.props.className}`} style={{...this.props.style}}>{this.props.children}</div>
 			</div>
 		)
 	}
