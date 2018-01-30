@@ -90,7 +90,7 @@ export class Canvas extends React.Component<Props, State> {
 
 		return (
 			<div
-				className={styles.stage}
+				className={`${styles.stage} stage`}
 				style={{
 					top: '50%',
 					left: '50%',
