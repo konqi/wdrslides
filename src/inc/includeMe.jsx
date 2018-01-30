@@ -1,14 +1,23 @@
 import * as React from 'react'
 import {Slide} from '../canvas'
-import includedContent from './includeSample.html'
+import includedHtml from './includeHTMLSample.html'
+import includedMarkdown from './includedMarkdownSample.md'
 
-export default (
-	<Slide>
+export default [
+	<Slide key="1">
 		<div
 			style={{margin: '20px'}}
 			dangerouslySetInnerHTML={{
-				__html: includedContent
+				__html: includedHtml
+			}}
+		/>
+	</Slide>,
+	<Slide key="2">
+		<div
+			style={{margin: '20px'}}
+			dangerouslySetInnerHTML={{
+				__html: includedMarkdown
 			}}
 		/>
 	</Slide>
-)
+]

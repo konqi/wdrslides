@@ -70,4 +70,4 @@ const end = (
 	</Slide>
 )
 
-export default [intro, included, brag, warning, end]
+export default [intro, ...included, brag, warning, end]

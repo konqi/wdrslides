@@ -64,6 +64,17 @@ function getLoaders () {
 			options: {outputPath: 'images/'}
 		},
 		{
+			test: /\.md$/,
+			use: [
+				{
+					loader: 'html-loader'
+				},
+				{
+					loader: 'markdown-loader'
+				}
+			]
+		},
+		{
 			test: /\.(html)$/,
 			use: {
 				loader: 'html-loader',
