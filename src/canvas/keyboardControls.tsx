@@ -1,17 +1,25 @@
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
 
-export interface Props {
-  handleNavigationCallback: (direction: string) => void
+export interface Context {
+	handleNavigationCallback: (action: 'forward' | 'backward' | 'up' | 'down') => void
 }
 
-export class KeyboardControls extends React.Component<Props> {
-  static defaultProps = {
-    handleNavigationCallback: () => {
-      console.log(
-        'It appears you are using KeyboardControls outside a Presentation context. Please only use KeyboardControls inside <Presentation></Presentation>.'
-      )
-    }
-  }
+export class KeyboardControls extends React.Component {
+	context: Context
+
+	static contextTypes = {
+		handleNavigationCallback: PropTypes.func
+	}
+
+	handleNavigationCallback(action: 'forward' | 'backward' | 'up' | 'down') : void {
+		const fallback = () => {console.log(
+			'It appears you are using KeyboardControls outside a Presentation context. Please only use KeyboardControls inside <Presentation></Presentation>.'
+		)}
+
+		(this.context.handleNavigationCallback || fallback)(action)
+
+	}
 
 	componentDidMount () {
 		document.addEventListener('keydown', this.handleKeyPress.bind(this), false)
@@ -28,22 +36,22 @@ export class KeyboardControls extends React.Component<Props> {
 	handleKeyPress (event: KeyboardEvent) {
 		switch (event.code) {
 			case 'ArrowDown': // move one slide down
-				this.props.handleNavigationCallback('forward')
+				this.handleNavigationCallback('forward')
 				break
 			case 'ArrowUp': // move one slide up
-				this.props.handleNavigationCallback('backward')
+				this.handleNavigationCallback('backward')
 				break
 			case 'ArrowLeft': // move to slide to the left
-				this.props.handleNavigationCallback('backward')
+				this.handleNavigationCallback('backward')
 				break
 			case 'ArrowRight': // move to slide to the right
-				this.props.handleNavigationCallback('forward')
+				this.handleNavigationCallback('forward')
 				break
 			case 'Space': // logically the next slide
-				this.props.handleNavigationCallback('forward')
+				this.handleNavigationCallback('forward')
 				break
 			case 'Backspace':
-				this.props.handleNavigationCallback('backward')
+				this.handleNavigationCallback('backward')
 				break
 			default:
 				console.log(
