@@ -46,7 +46,7 @@ function getLoaders () {
 		{
 			test: /\.(ts|tsx)$/,
 			exclude: /node_modules/,
-			loaders: ['babel-loader', 'ts-loader']
+			loaders: ['babel-loader', 'awesome-typescript-loader']
 		},
 		{
 			test: /\.(js|jsx)$/,
@@ -114,7 +114,9 @@ function getRules () {
 }
 
 module.exports = {
-	entry: './src/main.jsx',
+	entry: {
+		main: './src/main.jsx'
+	},
 	// output: {
 	// 	filename: 'bundle.js',
 	// 	path: path.resolve(__dirname, 'dist')

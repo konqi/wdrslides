@@ -7,7 +7,7 @@ import {
 	KeyboardControls,
 	Progress,
 	ProgressBar
-} from './canvas'
+} from './components'
 import slides from './inc/slides'
 
 const presentation = (

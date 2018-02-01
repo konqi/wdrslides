@@ -1,6 +1,6 @@
 import React from 'react'
 import included from './includeMe'
-import {Slide} from '../canvas'
+import {Slide} from '../components'
 
 const intro = (
 	<Slide>
