@@ -1,3 +1,3 @@
-# reimagined-umbrella
+# wdrslides Demo
 
-tbd
+This branch contains a demo for [wdrslides](https://github.com/konqi/reimagined-umbrella).
