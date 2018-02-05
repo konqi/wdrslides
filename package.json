@@ -3,6 +3,10 @@
 	"version": "1.0.0",
 	"description": "webpack driven react slides framework",
 	"main": "dist/main.bundle.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/konqi/reimagined-umbrella.git"
+	},
 	"scripts": {
 		"test": "jest --watch",
 		"dist": "rm -rf dist && NODE_ENV=production webpack",
