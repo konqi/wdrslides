@@ -7,10 +7,10 @@ import * as PropTypes from 'prop-types'
 // store: any
 // this.store = createStore(PresentationStore)
 
-export interface Props extends React.Props<Presentation> {
+export interface PresentationProps extends React.Props<Presentation> {
 }
 
-export interface State {
+export interface PresentationState {
 	position: number
 	total: number
 }
@@ -23,8 +23,8 @@ export interface PresentationContext {
 	isLast: boolean
 }
 
-class Presentation extends React.Component<Props, State> {
-	constructor (props: Props) {
+export class Presentation extends React.Component<PresentationProps, PresentationState> {
+	constructor (props: PresentationProps) {
 		super(props)
 		this.state = {position: 0, total: 0}
 		this.handleNavigation = this.handleNavigation

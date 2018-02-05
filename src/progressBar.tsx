@@ -2,13 +2,13 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import {pick} from 'lodash'
 
-export interface Context {
+export interface ProgressBarContext {
 	currentSlide: number
 	totalNumberOfSlides: number
 }
 
 export class ProgressBar extends React.Component<{}, {}> {
-	context: Context
+	context: ProgressBarContext
 
 	static contextTypes = {
 		currentSlide: PropTypes.number,

@@ -3,25 +3,25 @@ import {Slide} from './slide'
 import {throttle} from 'lodash'
 const styles = require('./canvas.css')
 
-export interface Props extends React.Props<Canvas> {
+export interface CanvasProps extends React.Props<Canvas> {
 	slidesLoadedCallback: any
 	currentSlide: number
 	aspectRatio: number
 	border: number
 }
 
-export interface State {
+export interface CanvasState {
 	scale: number
 }
 
-export class Canvas extends React.Component<Props, State> {
+export class Canvas extends React.Component<CanvasProps, CanvasState> {
 	size: {
 		width:number
 		height: number
 	}
 	numberOfSlides: number = 0
 
-	constructor (props: Props) {
+	constructor (props: CanvasProps) {
 		super(props)
 		this.updateDimensions = throttle(this.updateDimensions.bind(this), 100)
 		this.size = {

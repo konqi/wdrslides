@@ -1,14 +1,14 @@
 import * as React from 'react'
 const styles = require('./slide.css')
 
-export interface Props {
+export interface SlideProps {
 	state: 'past' | 'current' | 'future'
 	children: any
 	className: string,
 	style: object
 }
 
-export class Slide extends React.Component<Props, {}> {
+export class Slide extends React.Component<SlideProps, {}> {
 	render () {
 		return (
 			<div

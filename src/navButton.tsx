@@ -2,19 +2,19 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import {pick, defaults} from 'lodash'
 
-export interface Context {
+export interface NavButtonContext {
 	isFirst: boolean
 	isLast: boolean
 	handleNavigationCallback: (action: 'forward' | 'backward' | 'up' | 'down') => void
 }
 
-export interface Props {
+export interface NavButtonProps {
 	className: string
 	children: any
 	action: 'forward' | 'backward' | 'up' | 'down'
 }
 
-export class NavButton extends React.Component<Props, {}> {
+export class NavButton extends React.Component<NavButtonProps, {}> {
 	static defaultProps = {
 		className: ''
 	}
@@ -25,7 +25,7 @@ export class NavButton extends React.Component<Props, {}> {
 		)
 	}
 
-	context: Context
+	context: NavButtonContext
 
 	static contextTypes = {
         isFirst: PropTypes.bool,

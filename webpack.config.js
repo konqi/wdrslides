@@ -27,17 +27,13 @@ const plugins = (() => {
 	}
 
 	return [
-		...plugins,
-		// new CleanWebpackPlugin(['dist'], { watch: false }),
-		new HtmlWebpackPlugin({
-			template: 'src/index.html'
-		}),
-		new optimize.CommonsChunkPlugin({
-			name: 'vendor', // Specify the common bundle's name.
-			minChunks: function (module) {
-				return module.context && module.context.includes('node_modules')
-			}
-		})
+		...plugins
+		// new optimize.CommonsChunkPlugin({
+		// 	name: 'vendor', // Specify the common bundle's name.
+		// 	minChunks: function (module) {
+		// 		return module.context && module.context.includes('node_modules')
+		// 	}
+		// })
 	]
 })()
 
@@ -45,43 +41,13 @@ function getLoaders () {
 	return [
 		{
 			test: /\.(ts|tsx)$/,
-			exclude: /node_modules/,
+			exclude: /node_modules|dist/,
 			loaders: ['babel-loader', 'awesome-typescript-loader']
 		},
 		{
 			test: /\.(js|jsx)$/,
-			exclude: /node_modules/,
+			exclude: /node_modules|dist/,
 			loaders: ['babel-loader', 'eslint-loader']
-		},
-		{
-			test: /\.(woff|woff2|eot|ttf|otf)$/,
-			loader: 'file-loader',
-			options: {outputPath: 'fonts/'}
-		},
-		{
-			test: /\.(png|jpg|svg)$/,
-			loader: 'file-loader',
-			options: {outputPath: 'images/'}
-		},
-		{
-			test: /\.md$/,
-			use: [
-				{
-					loader: 'html-loader'
-				},
-				{
-					loader: 'markdown-loader'
-				}
-			]
-		},
-		{
-			test: /\.(html)$/,
-			use: {
-				loader: 'html-loader',
-				options: {
-					attrs: [':data-src']
-				}
-			}
 		}
 	]
 }
@@ -103,7 +69,9 @@ function getRules () {
 					options: {
 						importLoaders: 1,
 						modules: true,
-						localIdentName: '[path]___[name]__[local]___[hash:base64:5]'
+						localIdentName: process.env.NODE_ENV !== 'production'
+							? '[path]___[name]__[local]___[hash:base64:5]'
+							: '[hash:base64:5]'
 					}
 				},
 				{loader: 'postcss-loader'}
@@ -115,7 +83,7 @@ function getRules () {
 
 module.exports = {
 	entry: {
-		main: './src/main.jsx'
+		main: './src/index.ts'
 	},
 	// output: {
 	// 	filename: 'bundle.js',
@@ -126,7 +94,14 @@ module.exports = {
 	},
 	output: {
 		filename: '[name].bundle.js',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, 'dist'),
+		libraryTarget: 'commonjs2'
+	},
+	externals: {
+		react: 'commonjs react',
+		reactDom: 'commonjs react-dom',
+		propTypes: 'commonjs prop-types',
+		lodash: 'commonjs lodash'
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']

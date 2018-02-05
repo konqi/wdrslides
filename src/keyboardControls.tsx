@@ -1,12 +1,12 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-export interface Context {
+export interface KeyboardControlsContext {
 	handleNavigationCallback: (action: 'forward' | 'backward' | 'up' | 'down') => void
 }
 
 export class KeyboardControls extends React.Component {
-	context: Context
+	context: KeyboardControlsContext
 
 	static contextTypes = {
 		handleNavigationCallback: PropTypes.func
