@@ -1,5 +1,6 @@
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
+[![Coverage Status][coveralls-badge]][coveralls]
 
 # wdrslides
 
@@ -132,3 +133,6 @@ To get started you may want to look at the Progress components.
 
 [npm-badge]: https://img.shields.io/npm/v/wdrslides.png?style=flat-square
 [npm]: https://www.npmjs.org/package/wdrslides
+
+[coveralls-badge]: https://coveralls.io/repos/github/konqi/wdrslides/badge.svg?branch=master
+[coveralls]: https://coveralls.io/github/konqi/wdrslides?branch=master

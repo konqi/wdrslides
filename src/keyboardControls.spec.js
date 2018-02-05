@@ -2,6 +2,17 @@ import React from 'react'
 import KeyboardControls from './keyboardControls'
 import {shallow} from 'enzyme'
 
+const navigationCallbackMock = (expected, done) =>
+	jest.fn(param => {
+		expect(param).toBe(expected)
+		done()
+	})
+
+let materializeComponent = navigationCallback =>
+	shallow(<KeyboardControls />, {
+		context: {handleNavigationCallback: navigationCallback}
+	})
+
 describe('KeyboardControls component', () => {
 	it('should gracefully handle invalid events', () => {
 		const consoleLog = console.log
@@ -32,5 +43,28 @@ describe('KeyboardControls component', () => {
 		component.instance().handleKeyPress({code: 'ArrowDown'})
 		// validate outcome
 		expect(handleNavigationCallback).toHaveBeenCalled()
+	})
+
+	it('Handle valid keyboard actions', done => {
+		const actionsMap = {
+			ArrowUp: 'backward',
+			ArrowDown: 'forward',
+			ArrowLeft: 'backward',
+			ArrowRight: 'forward',
+			Space: 'forward',
+			Backspace: 'backward'
+		}
+
+		let count = Object.keys(actionsMap).length
+
+		for (let keyCode in actionsMap) {
+			const component = materializeComponent(
+				navigationCallbackMock(actionsMap[keyCode], () => {
+					count--
+					if (count === 0) done()
+				})
+			)
+			component.instance().handleKeyPress({code: keyCode})
+		}
 	})
 })
