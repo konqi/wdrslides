@@ -5,7 +5,7 @@
 	"main": "dist/main.bundle.js",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/konqi/reimagined-umbrella.git"
+		"url": "https://github.com/konqi/wdrslides.git"
 	},
 	"scripts": {
 		"test": "jest --watch",
