@@ -7,7 +7,7 @@ import {
 	KeyboardControls,
 	Progress,
 	ProgressBar
-} from './components'
+} from 'wdrslides'
 import slides from './inc/slides'
 
 const presentation = (

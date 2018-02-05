@@ -1,6 +1,6 @@
 import React from 'react'
 import included from './includeMe'
-import {Slide} from '../components'
+import {Slide} from 'wdrslides'
 
 const intro = (
 	<Slide>

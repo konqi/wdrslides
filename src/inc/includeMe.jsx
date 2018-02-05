@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Slide} from '../components'
+import {Slide} from 'wdrslides'
 import includedHtml from './includeHTMLSample.html'
 import includedMarkdown from './includedMarkdownSample.md'
 

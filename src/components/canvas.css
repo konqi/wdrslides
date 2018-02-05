@@ -1,8 +1,0 @@
-.stage {
-	position: relative;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	transform-origin: top left;
-	transition: all 0.25s;
-}

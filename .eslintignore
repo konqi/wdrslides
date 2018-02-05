@@ -1,2 +1,4 @@
 **/*.tsx
 **/*.ts
+node_modules/
+dist/
