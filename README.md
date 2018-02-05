@@ -1,3 +1,6 @@
+[![Travis][build-badge]][build]
+[![npm package][npm-badge]][npm]
+
 # wdrslides
 
 **W**ebpack **D**riven **R**eact **Slides** is a set of lightweight react
@@ -123,3 +126,9 @@ I recommend taking a look at [markdown-loader](https://github.com/peerigon/markd
 
 You can also extend wdrslides however you wish.
 To get started you may want to look at the Progress components.
+
+[build-badge]: https://img.shields.io/travis/konqi/wdrslides/master.png?style=flat-square
+[build]: https://travis-ci.org/konqi/wdrslides
+
+[npm-badge]: https://img.shields.io/npm/v/wdrslides.png?style=flat-square
+[npm]: https://www.npmjs.org/package/wdrslides
