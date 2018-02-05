@@ -37,6 +37,7 @@
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-react": "^6.24.1",
 		"clean-webpack-plugin": "^0.1.17",
+		"coveralls": "^3.0.0",
 		"css-loader": "^0.28.9",
 		"enzyme": "^3.3.0",
 		"enzyme-adapter-react-16": "^1.1.1",
@@ -75,13 +76,21 @@
 	},
 	"jest": {
 		"moduleNameMapper": {
-			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-				"<rootDir>/__mocks__/fileMock.js",
+			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
 			"\\.(css|less)$": "identity-obj-proxy"
 		},
-		"setupFiles": ["<rootDir>/src/setupTests.ts"],
+		"setupFiles": [
+			"<rootDir>/src/setupTests.ts"
+		],
 		"testRegex": "\\.(test|spec)\\.(jsx?|tsx?)$",
-		"moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js",
+			"jsx",
+			"json",
+			"node"
+		],
 		"transform": {
 			"\\.tsx?$": "ts-jest",
 			"\\.jsx?$": "babel-jest"
