@@ -118,7 +118,7 @@ Add styles to your index.html
 
 ## Full Example
 
-See the [demo branch](https://github.com/konqi/reimagined-umbrella/tree/demo) of this repository.
+See the [demo branch](https://github.com/konqi/wdrslides/tree/demo) of this repository.
 
 ## Extend
 
