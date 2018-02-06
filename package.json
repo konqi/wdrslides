@@ -1,6 +1,6 @@
 {
 	"name": "wdrslides",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "webpack driven react slides framework",
 	"main": "dist/main.bundle.js",
 	"repository": {
@@ -76,21 +76,13 @@
 	},
 	"jest": {
 		"moduleNameMapper": {
-			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+				"<rootDir>/__mocks__/fileMock.js",
 			"\\.(css|less)$": "identity-obj-proxy"
 		},
-		"setupFiles": [
-			"<rootDir>/src/setupTests.ts"
-		],
+		"setupFiles": ["<rootDir>/src/setupTests.ts"],
 		"testRegex": "\\.(test|spec)\\.(jsx?|tsx?)$",
-		"moduleFileExtensions": [
-			"ts",
-			"tsx",
-			"js",
-			"jsx",
-			"json",
-			"node"
-		],
+		"moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
 		"transform": {
 			"\\.tsx?$": "ts-jest",
 			"\\.jsx?$": "babel-jest"
