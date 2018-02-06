@@ -5,12 +5,12 @@ import {Slide} from 'wdrslides'
 const intro = (
 	<Slide>
 		<span style={{textAlign: 'center'}}>
-			<h1>wdslides.js</h1>
+			<h1>wdrslides.js</h1>
 			<p>a webpack driven slide presenter</p>
 			<p>
 				<small>
           Source available on{' '}
-					<a href="https://github.com/konqi/reimagined-umbrella">github</a>
+					<a href="https://github.com/konqi/wdrslides">github</a>
 				</small>
 			</p>
 		</span>

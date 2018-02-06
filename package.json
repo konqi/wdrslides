@@ -50,9 +50,6 @@
 		"jest": "^22.1.2",
 		"markdown-loader": "^2.0.2",
 		"npm-run-all": "^4.1.2",
-		"postcss": "^6.0.16",
-		"postcss-cssnext": "^3.0.2",
-		"postcss-loader": "^2.0.10",
 		"react-test-renderer": "^16.2.0",
 		"regenerator-runtime": "^0.11.1",
 		"style-loader": "^0.19.0",
@@ -69,17 +66,25 @@
 	"dependencies": {
 		"react": "^16.2.0",
 		"react-dom": "^16.2.0",
-		"wdrslides": "^1.0.0"
+		"wdrslides": "^1.0.1"
 	},
 	"jest": {
 		"moduleNameMapper": {
-			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-				"<rootDir>/__mocks__/fileMock.js",
+			"\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
 			"\\.(css|less)$": "identity-obj-proxy"
 		},
-		"setupFiles": ["<rootDir>/src/setupTests.ts"],
+		"setupFiles": [
+			"<rootDir>/src/setupTests.ts"
+		],
 		"testRegex": "\\.(test|spec)\\.(jsx?|tsx?)$",
-		"moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js",
+			"jsx",
+			"json",
+			"node"
+		],
 		"transform": {
 			"\\.tsx?$": "ts-jest",
 			"\\.jsx?$": "babel-jest"
