@@ -83,7 +83,7 @@ function getRules () {
 
 module.exports = {
 	entry: {
-		main: './src/index.ts'
+		index: './src/index.ts'
 	},
 	// output: {
 	// 	filename: 'bundle.js',
@@ -93,7 +93,7 @@ module.exports = {
 		contentBase: './dist'
 	},
 	output: {
-		filename: '[name].bundle.js',
+		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist'),
 		libraryTarget: 'commonjs2'
 	},

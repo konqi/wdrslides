@@ -1,8 +1,9 @@
 {
 	"name": "wdrslides",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "webpack driven react slides framework",
-	"main": "dist/main.bundle.js",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/konqi/wdrslides.git"
