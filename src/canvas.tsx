@@ -78,13 +78,12 @@ export class Canvas extends React.Component<CanvasProps, CanvasState> {
 		this.numberOfSlides = 0
 
 		let render = React.Children.map(this.props.children, (child: React.ReactElement<any>) => {
-			switch (child.type) {
-				case Slide:
-					return React.cloneElement(child, {
-						state: this.getSlideState(this.numberOfSlides++)
-					})
-				default:
-					return child
+			if(child.type === Slide || ((child.type as React.ComponentClass).prototype instanceof Slide)){
+				return React.cloneElement(child, {
+					state: this.getSlideState(this.numberOfSlides++)
+				})
+			}else{
+				return child
 			}
 		})
 
