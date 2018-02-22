@@ -13,9 +13,16 @@
 
 .body {
 	position: absolute;
-	top: 50%;
 	width: 100%;
+}
+
+.vcenter {
+	top: 50%;
 	transform: translate3d(0, -50%, 0);
+}
+
+.vfill {
+	height: 100%;
 }
 
 .future {

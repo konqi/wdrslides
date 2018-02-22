@@ -4,7 +4,8 @@ const styles = require('./slide.css')
 export interface SlideProps {
 	state: 'past' | 'current' | 'future'
 	children: any
-	className: string,
+	className: string
+	center: boolean
 	style: object
 }
 
@@ -19,14 +20,15 @@ export class Slide extends React.Component<SlideProps, {}> {
 					styles[this.props.state]
 				].join(' ')}
 			>
-				<div className={`${styles.body} ${this.props.className}`} style={{...this.props.style}}>{this.props.children}</div>
+				<div className={[styles.body, this.props.className, this.props.center ? styles.vcenter : styles.vfill].join(' ')} style={{...this.props.style}}>{this.props.children}</div>
 			</div>
 		)
 	}
 
 	static defaultProps = {
 		state: 'future',
-		className: ''
+		className: '',
+		center: true
 	}
 }
 
