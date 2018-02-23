@@ -40,9 +40,16 @@ export class Presentation extends React.Component<PresentationProps, Presentatio
 		}
 	}
 
+	updatePosition(position: number) {
+		this.setState({position})
+		if(history) {
+			history.pushState(null, null, `#${position}`)
+		}
+	}
+
 	goForward () {
 		if (this.state.position + 1 < this.state.total) {
-			this.setState({position: this.state.position + 1})
+			this.updatePosition(this.state.position + 1)
 		} else {
 			console.log('no more slides in that direction')
 		}
@@ -50,7 +57,7 @@ export class Presentation extends React.Component<PresentationProps, Presentatio
 
 	goBackward () {
 		if (this.state.position > 0) {
-			this.setState({position: this.state.position - 1})
+			this.updatePosition(this.state.position - 1)
 		} else {
 			console.log('no more slides in that direction')
 		}
@@ -72,6 +79,9 @@ export class Presentation extends React.Component<PresentationProps, Presentatio
 
 	slidesLoadedCallback (numberOfSlides: number) {
 		this.setState({total: numberOfSlides})
+		if(location.hash) {
+			this.updatePosition(parseInt(location.hash.substr(1)))
+		}
 	}
 
 	render () {
