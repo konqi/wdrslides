@@ -69,9 +69,10 @@ function getRules () {
 					options: {
 						importLoaders: 1,
 						modules: true,
-						localIdentName: process.env.NODE_ENV !== 'production'
-							? '[path]___[name]__[local]___[hash:base64:5]'
-							: '[hash:base64:5]'
+						localIdentName:
+              process.env.NODE_ENV !== 'production'
+              	? '[path]___[name]__[local]___[hash:base64:5]'
+              	: '[hash:base64:5]'
 					}
 				},
 				{loader: 'postcss-loader'}
@@ -89,9 +90,6 @@ module.exports = {
 	// 	filename: 'bundle.js',
 	// 	path: path.resolve(__dirname, 'dist')
 	// },
-	devServer: {
-		contentBase: './dist'
-	},
 	output: {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist'),

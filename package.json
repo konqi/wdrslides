@@ -1,6 +1,6 @@
 {
 	"name": "wdrslides",
-	"version": "1.0.5",
+	"version": "1.1.0",
 	"description": "webpack driven react slides framework",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -12,8 +12,8 @@
 		"coverage": "jest --coverage",
 		"coveralls": "cat ./coverage/lcov.info | coveralls",
 		"test": "jest --watch",
-		"dist": "rm -rf dist && NODE_ENV=production webpack",
-		"build": "rm -rf dist && webpack",
+		"dist": "rm -rf dist && webpack --mode=production",
+		"build": "rm -rf dist && webpack --mode=development",
 		"watch": "webpack -w",
 		"prepublish": "npm run dist"
 	},
@@ -65,8 +65,8 @@
 		"typesafe-actions": "^1.1.2",
 		"typescript": "^2.7.2",
 		"uglifyjs-webpack-plugin": "^1.2.2",
-		"webpack": "^3.11.0",
-		"webpack-dev-server": "^2.11.2",
+		"webpack": "^4.0.1",
+		"webpack-cli": "^2.0.9",
 		"webpack-utf8-bom": "^1.1.3"
 	},
 	"dependencies": {
