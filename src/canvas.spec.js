@@ -153,13 +153,13 @@ describe('Canvas component', () => {
 		expect(handleNavigationCallback).toHaveBeenCalled()
 	})
 
-	it('should scale properly', () => {
-		// i have no idea how to test this
-		component = mount(
-			<div>
-				<Canvas slidesLoadedCallback={() => {}} />
-			</div>
-		)
-		console.log(component.childAt(0).render()[0].attribs.style)
-	})
+	// it('should scale properly', () => {
+	// 	// i have no idea how to test this
+	// 	component = mount(
+	// 		<div>
+	// 			<Canvas slidesLoadedCallback={() => {}} />
+	// 		</div>
+	// 	)
+	// 	console.log(component.childAt(0).render()[0].attribs.style)
+	// })
 })

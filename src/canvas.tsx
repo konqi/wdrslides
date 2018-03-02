@@ -36,6 +36,7 @@ export class Canvas extends React.Component<CanvasProps, CanvasState> {
 	constructor (props: CanvasProps) {
 		super(props)
 		this.recalculateScale = throttle(this.recalculateScale.bind(this), 100)
+		this.handleNavigationCallback = this.handleNavigationCallback.bind(this)
 		this.size = {
 			width: 960,
 			height: Math.floor(960 / (props.aspectRatio))
