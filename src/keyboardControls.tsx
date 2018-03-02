@@ -18,7 +18,6 @@ export class KeyboardControls extends React.Component {
 		)}
 
 		(this.context.handleNavigationCallback || fallback)(action)
-
 	}
 
 	componentDidMount () {

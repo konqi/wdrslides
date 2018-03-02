@@ -1,7 +1,10 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import {Slide} from './slide'
 import {throttle} from 'lodash'
+import * as Hammer from 'hammerjs'
 const styles = require('./canvas.css')
+import * as PropTypes from 'prop-types'
 
 export interface CanvasProps extends React.Props<Canvas> {
 	slidesLoadedCallback: any
@@ -14,19 +17,28 @@ export interface CanvasState {
 	scale: number
 }
 
+export interface CanvasContext {
+	handleNavigationCallback: (action: 'forward' | 'backward' | 'up' | 'down') => void
+}
+
 export class Canvas extends React.Component<CanvasProps, CanvasState> {
 	size: {
 		width:number
 		height: number
 	}
 	numberOfSlides: number = 0
+	context: CanvasContext
+
+	static contextTypes = {
+		handleNavigationCallback: PropTypes.func
+	}
 
 	constructor (props: CanvasProps) {
 		super(props)
-		this.updateDimensions = throttle(this.updateDimensions.bind(this), 100)
+		this.recalculateScale = throttle(this.recalculateScale.bind(this), 100)
 		this.size = {
 			width: 960,
-			height: Math.floor(960 / props.aspectRatio)
+			height: Math.floor(960 / (props.aspectRatio))
 		}
 	}
 
@@ -41,31 +53,51 @@ export class Canvas extends React.Component<CanvasProps, CanvasState> {
 		currentSlide: 0
 	}
 
-	componentWillMount () {
-		this.updateDimensions()
+	handleNavigationCallback(action: 'forward' | 'backward' | 'up' | 'down') : void {
+		const fallback = () => {console.log(
+			'It appears you are using Canvas outside a Presentation context. Please only use KeyboardControls inside <Presentation></Presentation>.'
+		)}
+
+		(this.context.handleNavigationCallback || fallback)(action)
+	}
+
+	componentWillMount() {
+		this.setState({scale: 1})
+		window.addEventListener('resize', this.recalculateScale)
+	}
+
+	enableTouchControl() {
+		let domNode = ReactDOM.findDOMNode(this) as HTMLElement
+		let hammer = new Hammer(domNode)
+		hammer.get('swipe').set({direction: Hammer.DIRECTION_HORIZONTAL})
+		hammer.on('swipe', this.handleSwipe)
+	}
+
+	handleSwipe(event : any) {
+		if(event.type === 'swipe' && event.direction === Hammer.DIRECTION_LEFT) {
+			this.handleNavigationCallback('forward')
+		} else if(event.type === 'swipe' && event.direction === Hammer.DIRECTION_RIGHT) {
+			this.handleNavigationCallback('backward')
+		}
 	}
 
 	componentDidMount () {
-		window.addEventListener('resize', this.updateDimensions)
 		this.props.slidesLoadedCallback(this.numberOfSlides)
+		this.enableTouchControl()
+		this.recalculateScale()
 	}
 
 	componentWillUnmount () {
-		window.removeEventListener('resize', this.updateDimensions)
+		window.removeEventListener('resize', this.recalculateScale)
 	}
 
-	updateDimensions () {
-		this.setState({scale: this.calcScale()})
-	}
-
-	calcScale () {
-		let xMax = window.innerWidth - this.props.border * 2
-		let yMax = window.innerHeight - this.props.border * 2
-
-		let scaleX = xMax / this.size.width
-		let scaleY = yMax / this.size.height
-
-		return Math.min(scaleX, scaleY)
+	recalculateScale () {
+		let domNode = ReactDOM.findDOMNode(this) as HTMLElement
+		if(domNode) {
+			let parent = domNode.parentNode as HTMLElement
+			let scale = Math.min(parent.clientWidth / this.size.width, parent.clientHeight / this.size.height)
+			this.setState({scale})
+		}
 	}
 
 	getSlideState (n: number) : 'past' | 'future' | 'current' {
